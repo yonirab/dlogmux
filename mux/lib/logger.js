@@ -21,10 +21,6 @@ const logContainers = async () => {
     console.log('In logContainers')
     // Get all containers on current host
     let containers = await docker.container.list();
-
-    console.log(`========Found ${containers.length} containers`) ; 
-    containers.map(container => console.log(container.data.Labels));
-    console.log(`=======================================================`)
     
     // We only need to log containers that pass the shouldLog filter
     let containersToLog = containers.filter(shouldLog);
@@ -37,6 +33,7 @@ const logContainers = async () => {
       
   } catch (err) {
       console.error(`attachToContainers: ${err.message}`);
+      throw (err);
   }
 };
 
