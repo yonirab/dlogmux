@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  mux:
+    build: mux
+    env_file: .env
+    restart: always
+    command: npm start
+    depends_on:
+      - logoutput
+      - logerrors
+      - notlogged
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /workspace/dlogmux/logs:/mnt
+  logoutput:
+    image: ubuntu
+    labels:
+      - io.logmux.strategy=LOG
+    command:  bash -c 'ID=0; while true; do ((ID++));printf "%06d-" "$ID"; hostname;  sleep 5; done'  
+  logerrors:
+    image: ubuntu
+    labels:
+      - io.logmux.strategy=LOG
+    command: bash -c 'ID=0; while true; do ((ID++)); printf "%06d-" "$ID"; echo -n `hostname`" " && ping nobody; sleep 10; done'
+  notlogged:
+    image: ubuntu
+    command: bash -c 'ID=0; while true; do ((ID++));printf "%06d-" "$ID"; echo "If you see this in the log something is wrong";  sleep 5; done'             
+  

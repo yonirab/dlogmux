@@ -2,10 +2,10 @@ const {Docker} = require('node-docker-api'),
       {handleStream} = require('./storage');   
 
 // This is the label key that we use to specify if a container should be logged. 
-const logStrategy = process.env.LOG_STRATEGY || 'io.logmux.strategy';       
+const logStrategyKey = process.env.LOG_STRATEGY_KEY || 'io.logmux.strategy';       
 
-// We should log a container if it has a logStrategy key in its Labels. Currently, we don't care what the value is.            
-const shouldLog = container => logStrategy in container.data.Labels;
+// We should log a container if it has a logStrategyKey in its Labels. Currently, we don't care what the value is.            
+const shouldLog = container => logStrategyKey in container.data.Labels;
 
 // A logs stream from a container (including both stdout and stderr)
 const logsStream = async container => await container.logs({follow: true, stdout: true, stderr: true});
