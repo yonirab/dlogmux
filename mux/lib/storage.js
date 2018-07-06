@@ -8,7 +8,7 @@ const isDirectory = source => lstatSync(source).isDirectory();
 const getSubDirectories = source => readdirSync(source).map(name => join(source,name)).filter(isDirectory);
 
 // The root directory for all storage methods
-const storageMethodsRootDir = join(__dirname, 'stores');
+const storageMethodsRootDir = join(__dirname, 'plugins');
 
 // Each sub-directory of storageMethodsRootDir corresponds to a storage method 
 const storageMethods = getSubDirectories(storageMethodsRootDir);
@@ -17,7 +17,7 @@ const storageMethods = getSubDirectories(storageMethodsRootDir);
 const logStores = storageMethods.map(storageMethod => {
     // Require store.js file found under any defined storageMethod directory
     const storeJsPath=join(storageMethod,'store.js');
-    console.log(`Require ${storeJsPath}`); 
+    console.log(`require ${storeJsPath}`); 
     const {Store} = require(storeJsPath);
     return new Store();
 });
@@ -28,10 +28,10 @@ const createResources = stores => stores.map(store => store.createResources());
 // Handle a stream across all logStores
 const handleStream = stream => logStores.map(logStore => logStore.handleStream(stream));
 
-// When this module is required, go ahead and create resources for all our logStores
+// When this module is required, we create resources for all our logStores
 createResources(logStores);
 
-// Users of this module simply call handleStream() to handle a log stream across all logStores
+// Users of this module call handleStream() to handle a log stream across all logStores
 module.exports = {
     handleStream,
 };
