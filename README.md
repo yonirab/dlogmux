@@ -91,7 +91,10 @@ handleStream() gets called once per connected logged container.
 
 ## Limitations ##
 
-The mux microservice uses the "logs" endpoint from the Docker remote API to retrieve log streams from
+1. The mux microservice only retrieves logs from containers that already exist when it initializes.
+It does not listen for creation of new containers. 
+
+2. The mux microservice uses the "logs" endpoint from the Docker remote API to retrieve log streams from
 containers. Although both stdout and stderr are retrieved, it seems that non-newline terminated logs
 are not streamed. This can be demonstrated by uncommenting service logmix in docker-compose.yml.
 This service logs to both stdout and stderr, however, the logs to stdout are not newline-terminated.
