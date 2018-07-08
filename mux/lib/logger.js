@@ -14,15 +14,15 @@ const logsStream = async container => await container.logs({follow: true, stdout
 const handle = stream => handleStream(stream);
 
 // Log applicable containers running on the current host
-const logContainers = async () => {
+const activate = async () => {
 
   try {
     const docker = new Docker({ socketPath: '/var/run/docker.sock' });
-    console.log('In logContainers')
+  
     // Get all containers on current host
     let containers = await docker.container.list();
     
-    // We only need to log containers that pass the shouldLog filter
+    // We will only log containers that pass the shouldLog filter
     let containersToLog = containers.filter(shouldLog);
 
     // An array of logs streams, one for each container that we need to log 
@@ -38,5 +38,5 @@ const logContainers = async () => {
 };
 
 module.exports = {
-  logContainers,  
+  activate,  
 }

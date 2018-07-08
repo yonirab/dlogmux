@@ -1,4 +1,4 @@
-const {logContainers} = require('./lib/logger');
+const {activate} = require('./lib/logger');
 
 const init = async argv => {
   try {
@@ -9,7 +9,7 @@ const init = async argv => {
 
       // If we get this far, all our storage plugins should be instatiated already,
       // so let's start logging containers 
-      await logContainers();
+      await activate();
   
   } catch (err) {
       console.error(`${__filename}: Exiting due to exception: ${err.stack}`);

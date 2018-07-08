@@ -17,15 +17,21 @@ services:
     env_file: .env
     labels:
       - $LOG_STRATEGY_KEY=LOG
-    command:  bash -c 'ID=0; while true; do ((ID++));printf "%06d-" "$ID"; hostname;  sleep 10; done'  
+    command:  bash -c 'NUM=0; while true; do ((NUM++));printf "%06d-" "$$NUM"; hostname;  sleep 10; done'  
   logerrors:
     image: ubuntu
     env_file: .env
     labels:
       - $LOG_STRATEGY_KEY=LOG
-    command: bash -c 'ID=0; while true; do ((ID++)); printf "%06d-" "$ID"; echo -n `hostname`" " && ping nobody; sleep 10; done'
+    command: bash -c 'while true; do ping nobody; sleep 10; done'
+  logmix:
+    image: ubuntu
+    env_file: .env
+    labels:
+      - $LOG_STRATEGY_KEY=LOG
+    command: bash -c 'NUM=0; while true; do ((NUM++)); printf "%06d-" "$$NUM"; echo -n `hostname`" " && grep 1234567 abcdefg; sleep 10; done'
   notlogged:
     image: ubuntu
     env_file: .env
-    command: bash -c 'ID=0; while true; do ((ID++));printf "%06d-" "$ID"; echo "If you see this in the logfile in $HOST_LOGFILE_DIR something is wrong";  sleep 10; done'             
+    command: bash -c 'NUM=0; while true; do ((NUM++));printf "%06d-" "$$NUM"; echo -n `hostname`; echo " This should not appear in $HOST_LOGFILE_DIR/messages";  sleep 10; done'             
   

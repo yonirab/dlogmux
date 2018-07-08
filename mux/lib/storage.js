@@ -13,11 +13,12 @@ const storageMethodsRootDir = join(__dirname, 'plugins');
 // Each sub-directory of storageMethodsRootDir corresponds to a storage method 
 const storageMethods = getSubDirectories(storageMethodsRootDir);
 
-// logStores is an array of Store objects, capable of handling logs 
+// An array of objects, capable of handling logs.
+// Each object in logStores is an instance of a Store class, defined in a plugin and required here. 
 const logStores = storageMethods.map(storageMethod => {
     // Require store.js file found under any defined storageMethod directory
     const storeJsPath=join(storageMethod,'store.js');
-    console.log(`require ${storeJsPath}`); 
+    console.log(`Found ${storeJsPath}`); 
     const {Store} = require(storeJsPath);
     return new Store();
 });
