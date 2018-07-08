@@ -24,13 +24,15 @@ const logStores = storageMethods.map(storageMethod => {
 });
 
 // Create resources for stores
-const createResources = stores => stores.map(store => store.createResources());
+const createResources = async stores => await Promise.all(stores.map(store => store.createResources()));
 
 // Handle a stream across all logStores
 const handleStream = stream => logStores.map(logStore => logStore.handleStream(stream));
 
-// When this module is required, we create resources for all our logStores
-createResources(logStores);
+// When this module initializes, create resources for all logStores
+const init = async () => await createResources(logStores);
+
+init();
 
 // Users of this module call handleStream() to handle a log stream across all logStores
 module.exports = {

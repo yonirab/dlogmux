@@ -6,6 +6,6 @@ WORKDIR $APP
 # Ensure both package.json AND package-lock.json are copied if applicable (npm@5+)
 COPY package*.json index.js $APP/
 
-COPY ./lib $APP/lib
-
 RUN npm install
+
+COPY ./lib $APP/lib

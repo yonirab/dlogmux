@@ -9,8 +9,10 @@ class Store {
 
     // Create any resources needed for this plugin.
     // Authentication can be performed here, if necessary.
+    // Make sure to "await" any async calls, e.g.:
+    // await foo.athenticate(...);
     // This method will be called once per plugin.
-    createResources() {
+    async createResources() {
         this.logFile=fs.createWriteStream(this.path);
     }
 
