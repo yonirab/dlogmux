@@ -24,12 +24,12 @@ services:
     labels:
       - $LOG_STRATEGY_KEY=LOG
     command: bash -c 'while true; do ping nobody; sleep 10; done'
-  logmix:
-    image: ubuntu
-    env_file: .env
-    labels:
-      - $LOG_STRATEGY_KEY=LOG
-    command: bash -c 'NUM=0; while true; do ((NUM++)); printf "%06d-" "$$NUM"; echo -n `hostname`" " && grep 1234567 abcdefg; sleep 10; done'
+  # logmix:
+  #   image: ubuntu
+  #   env_file: .env
+  #   labels:
+  #     - $LOG_STRATEGY_KEY=LOG
+  #   command: bash -c 'NUM=0; while true; do ((NUM++)); printf "%06d-" "$$NUM"; echo -n `hostname`" " && grep 1234567 abcdefg; sleep 10; done'
   notlogged:
     image: ubuntu
     env_file: .env
