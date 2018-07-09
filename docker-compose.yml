@@ -11,7 +11,7 @@ services:
       - notlogged
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /workspace/dlogmux/logs:/mnt
+      - $HOST_LOGFILE_DIR:/mnt
   logoutput:
     image: ubuntu
     env_file: .env
