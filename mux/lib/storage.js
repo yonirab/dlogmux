@@ -26,8 +26,10 @@ const logStores = storageMethods.map(storageMethod => {
 // Create resources for stores
 const createResources = async stores => await Promise.all(stores.map(store => store.createResources()));
 
-// Handle a stream across all logStores
-const handleStream = stream => logStores.map(logStore => logStore.handleStream(stream));
+// Store a stream across all logStores
+const pushTo = stores => stream => stores.map(store => store.handleStream(stream));
+const pushToLogStores = pushTo(logStores);
+const handleStream = stream => pushToLogStores(stream);
 
 // When this module initializes, create resources for all logStores
 const init = async () => await createResources(logStores);
