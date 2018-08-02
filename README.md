@@ -7,8 +7,8 @@
 On a machine with docker installed:
 
     git clone git@bitbucket.org:yoni_rabinovitch/dlogmux.git
-	cd dlogmux
-	cp .env.example .env
+    cd dlogmux
+    cp .env.example .env
 
 Edit .env, and make sure `HOST_LOGFILE_DIR` points to a directory on your machine 
 that can be mounted as a container volume (default: ./logs).
@@ -21,7 +21,7 @@ In the docker-compose terminal, observe output such as the following:
 
     logerrors_1  | bash: ping: command not found
     notlogged_1  | 000002-47a10eb285d7 This should not appear in /workspace/dlogmux/logs/messages
-	logoutput_1  | 000002-80b4278b91ab
+    logoutput_1  | 000002-80b4278b91ab
 
 Note that the "command not found" messages are expected!
 
@@ -31,8 +31,8 @@ Now, in a separate terminal, run:
 
 Observe the logs from services logerrors and logoutput, but NOT from service notlogged, e.g:
 
-          bash: ping: command not found
-		  000002-80b4278b91ab
+            bash: ping: command not found
+            000002-80b4278b91ab
 
 This is because services logerrors and logoutput are defined with label `$LOG_STRATEGY_KEY=LOG`
 in docker-compose.yml, whereas notlogged is not.
