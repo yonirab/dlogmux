@@ -43,7 +43,7 @@ Microservice mux consists of 2 main modules:
 
 ### logger.js ###
 Retrieves logs streams from docker containers running on the same docker host, provided they are labelled
-with $LOG_STRATEGY_KEY=<Any Value>  
+with `$LOG_STRATEGY_KEY=AnyValue`  
 
 ### storage.js ###
 Stores streams using "plugin" storage methods.
